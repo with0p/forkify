@@ -29,5 +29,9 @@
     "@parcel/transformer-sass": "^2.0.0-nightly.587",
     "parcel": "^2.0.0-nightly.585",
     "postcss": "^8.2.6"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "regenerator-runtime": "^0.13.7"
   }
 }
