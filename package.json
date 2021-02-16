@@ -18,20 +18,14 @@
   },
   "homepage": "https://github.com/with0p/forkify#readme",
   "devDependencies": {
-    "@parcel/optimizer-cssnano": "^2.0.0-nightly.587",
-    "@parcel/optimizer-htmlnano": "^2.0.0-nightly.587",
-    "@parcel/packager-css": "^2.0.0-nightly.587",
-    "@parcel/packager-html": "^2.0.0-nightly.587",
-    "@parcel/transformer-css": "^2.0.0-nightly.587",
-    "@parcel/transformer-html": "^2.0.0-nightly.587",
-    "@parcel/transformer-postcss": "^2.0.0-nightly.587",
-    "@parcel/transformer-posthtml": "^2.0.0-nightly.587",
-    "@parcel/transformer-sass": "^2.0.0-nightly.587",
-    "parcel": "^2.0.0-nightly.585",
-    "postcss": "^8.2.6"
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.32.7"
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "regenerator-runtime": "^0.13.7"
-  }
+    "img": "^3.0.3"
+  },
+  "browserslist": [
+    "since 2018-06"
+  ]
 }
