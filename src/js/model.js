@@ -3,6 +3,10 @@ import { API_URL } from './config.js';
 import { getJson } from './helpers.js';
 export const state = {
   recipe: {},
+  search: {
+    query: '',
+    results: [],
+  },
 };
 
 export const loadRecipe = async function (recipeId) {
@@ -13,7 +17,17 @@ export const loadRecipe = async function (recipeId) {
 
     state.recipe = recipe;
   } catch (err) {
-    console.error(`Handeled in model ${err}`);
+    throw err;
+  }
+};
+
+export const loadRecipeSearchResult = async function (query) {
+  try {
+    if (!query) return;
+    const resultsJson = await getJson(`${API_URL}recipes?search=${query}`);
+    state.search.results = [...resultsJson.data.recipes];
+    state.search.query = query;
+  } catch (err) {
     throw err;
   }
 };
