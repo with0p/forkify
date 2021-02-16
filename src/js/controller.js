@@ -25,4 +25,6 @@ async function showRecipe() {
   }
 }
 
-['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
+(function init() {
+  recipeView.addHandlerRender(showRecipe);
+})();
