@@ -21,7 +21,8 @@ async function showRecipe() {
 
     recipeView.render(recipe);
   } catch (err) {
-    console.error(`Catched: ${err}`);
+    console.log(JSON.stringify(err));
+    recipeView.renderError(`Catched: ${err.message}`);
   }
 }
 

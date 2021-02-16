@@ -14,5 +14,6 @@ export const loadRecipe = async function (recipeId) {
     state.recipe = recipe;
   } catch (err) {
     console.error(`Handeled in model ${err}`);
+    throw err;
   }
 };
