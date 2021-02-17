@@ -1,5 +1,5 @@
 import View from './View.js';
-import icons from '../../img/icons.svg';
+import previewView from './previewView';
 
 class SearchResultsView extends View {
   _parentElement = document.querySelector('.results');
@@ -7,23 +7,7 @@ class SearchResultsView extends View {
     'No recipes found for your query, please, try another one';
   _defaultSuccessMessage = 'Success!';
   _generateMarkup() {
-    return this._data.map(this._generateResultElement).join('');
-  }
-
-  _generateResultElement(res) {
-    return `
-    <li class="preview">          
-    <a class="preview__link" href="#${res.id}">
-      <figure class="preview__fig">
-        <img src="${res.image_url}" alt="Test" />
-      </figure>
-      <div class="preview__data">
-        <h4 class="preview__title">${res.title}</h4>
-        <p class="preview__publisher">${res.publisher}</p>
-      </div>
-    </a>
-  </li>
-    `;
+    return this._data.map(result => previewView.render(result, false)).join('');
   }
 }
 

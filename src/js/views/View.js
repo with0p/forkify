@@ -3,16 +3,15 @@ import icons from '../../img/icons.svg';
 export default class View {
   _data;
 
-  render(data) {
+  render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
 
     this._data = data;
+    const markUp = this._generateMarkup();
+    if (!render) return markUp;
     this._clear();
-    this._parentElement.insertAdjacentHTML(
-      'afterbegin',
-      this._generateMarkup()
-    );
+    this._parentElement.insertAdjacentHTML('afterbegin', markUp);
   }
 
   renderSpinner() {
@@ -57,8 +56,6 @@ export default class View {
   }
 
   update(data) {
-    if (!data || (Array.isArray(data) && data.length === 0))
-      return this.renderError();
     this._data = data;
     const newMarkup = this._generateMarkup();
     const newDOM = document.createRange().createContextualFragment(newMarkup);
