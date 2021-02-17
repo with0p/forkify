@@ -15,9 +15,6 @@ async function controlRecipe() {
     const recipeId = window.location.hash.slice(1);
     if (!recipeId) return;
 
-    searchResultsView.update(model.getSearchResultsPage());
-    bookmarksView.update(model.state.bookmarks);
-
     // render spinner while waiting for recipe to load
     recipeView.renderSpinner();
 
@@ -26,8 +23,16 @@ async function controlRecipe() {
 
     // render the recipe
     recipeView.render(model.state.recipe);
+
+    // update search results
+    searchResultsView.update(model.getSearchResultsPage());
+
+    // update bookmarks list
+
+    bookmarksView.update(model.state.bookmarks);
   } catch (err) {
     recipeView.renderError(`Catched: ${err.message}`);
+    console.error(err);
   }
 }
 
@@ -83,7 +88,12 @@ function controlAddBookmark() {
   bookmarksView.render(model.state.bookmarks);
 }
 
+function controlBookmarks() {
+  bookmarksView.render(model.state.bookmarks);
+}
+
 (function init() {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipe);
   recipeView.addHandlerServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
