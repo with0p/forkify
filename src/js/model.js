@@ -1,6 +1,6 @@
-import { API_URL, RES_PER_PAGE } from './config.js';
+import { API_URL, RES_PER_PAGE, DEV_KEY } from './config.js';
 
-import { getJson } from './helpers.js';
+import { getJson, sendJson } from './helpers.js';
 export const state = {
   recipe: {},
   search: {
@@ -14,7 +14,7 @@ export const state = {
 
 export const loadRecipe = async function (recipeId) {
   try {
-    const respJson = await getJson(`${API_URL}recipes/${recipeId}`);
+    const respJson = await getJson(`${API_URL}/${recipeId}`);
 
     const { recipe } = respJson.data;
 
@@ -36,7 +36,7 @@ function persistBookmarks() {
 export const loadRecipeSearchResult = async function (query) {
   try {
     if (!query) return;
-    const resultsJson = await getJson(`${API_URL}recipes?search=${query}`);
+    const resultsJson = await getJson(`${API_URL}?search=${query}`);
     state.search.results = [...resultsJson.data.recipes];
     state.search.query = query;
     state.search.page = 1;
@@ -77,5 +77,34 @@ const initData = function () {
   const storage = localStorage.getItem('bookmarks');
   if (storage) state.bookmarks = JSON.parse(storage);
 };
-
 initData();
+
+export const uploadRecipe = async function (newRecipe) {
+  const ingredients = Object.entries(newRecipe)
+    .filter(entry => entry[0].startsWith('ingredient') && entry[1])
+    .map(ing => {
+      const ingArr = ing[1].split(',');
+      if (ingArr.length !== 3)
+        throw new Error(
+          'Please use format: "Quantity,Unit,Description" to input an ingredient data'
+        );
+      const [quantity, unit, description] = ingArr;
+      return {
+        quantity: quantity ? Number.parseFloat(quantity) : null,
+        unit: unit.trim(),
+        description: description.trim(),
+      };
+    });
+  const recipe = {
+    title: newRecipe.title,
+    source_url: newRecipe.sourceUrl,
+    image_url: newRecipe.image,
+    publisher: newRecipe.publisher,
+    cooking_time: Number.parseFloat(newRecipe.cookingTime),
+    servings: Number.parseInt(newRecipe.servings),
+    ingredients,
+  };
+  const resp = await sendJson(`${API_URL}?key=${DEV_KEY}`, recipe);
+  state.recipe = resp.data.recipe;
+  addBookmark(state.recipe);
+};
