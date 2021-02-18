@@ -1,5 +1,10 @@
 import { TIMEOUT_SEC } from './config.js';
 
+/**
+ *
+ * @param {string} url HTTP request URL
+ * @param {Object} uploadData data to be uploaded (for POST requests. If undefined, GET request will be initiated)
+ */
 export const AJAX = async function (url, uploadData = undefined) {
   try {
     const fetchPromise = uploadData
