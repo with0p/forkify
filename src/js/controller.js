@@ -103,6 +103,12 @@ async function controlAddRecipe(newRecipe) {
     // render uploaded recipe
     recipeView.render(model.state.recipe);
 
+    // re-render bookmarks
+    bookmarksView.render(model.state.bookmarks);
+
+    // set url hash to added recipe id
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+
     // render success message
     addRecipeView.renderMessage();
 

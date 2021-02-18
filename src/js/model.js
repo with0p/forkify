@@ -1,6 +1,6 @@
 import { API_URL, RES_PER_PAGE, DEV_KEY } from './config.js';
 
-import { getJson, sendJson } from './helpers.js';
+import { AJAX } from './helpers.js';
 export const state = {
   recipe: {},
   search: {
@@ -14,7 +14,7 @@ export const state = {
 
 export const loadRecipe = async function (recipeId) {
   try {
-    const respJson = await getJson(`${API_URL}/${recipeId}`);
+    const respJson = await AJAX(`${API_URL}/${recipeId}?key=${DEV_KEY}`);
 
     const { recipe } = respJson.data;
 
@@ -36,7 +36,7 @@ function persistBookmarks() {
 export const loadRecipeSearchResult = async function (query) {
   try {
     if (!query) return;
-    const resultsJson = await getJson(`${API_URL}?search=${query}`);
+    const resultsJson = await AJAX(`${API_URL}?search=${query}&key=${DEV_KEY}`);
     state.search.results = [...resultsJson.data.recipes];
     state.search.query = query;
     state.search.page = 1;
@@ -83,7 +83,7 @@ export const uploadRecipe = async function (newRecipe) {
   const ingredients = Object.entries(newRecipe)
     .filter(entry => entry[0].startsWith('ingredient') && entry[1])
     .map(ing => {
-      const ingArr = ing[1].split(',');
+      const ingArr = ing[1].split(',').map(el => el.trim());
       if (ingArr.length !== 3)
         throw new Error(
           'Please use format: "Quantity,Unit,Description" to input an ingredient data'
@@ -91,8 +91,8 @@ export const uploadRecipe = async function (newRecipe) {
       const [quantity, unit, description] = ingArr;
       return {
         quantity: quantity ? Number.parseFloat(quantity) : null,
-        unit: unit.trim(),
-        description: description.trim(),
+        unit,
+        description,
       };
     });
   const recipe = {
@@ -104,7 +104,7 @@ export const uploadRecipe = async function (newRecipe) {
     servings: Number.parseInt(newRecipe.servings),
     ingredients,
   };
-  const resp = await sendJson(`${API_URL}?key=${DEV_KEY}`, recipe);
+  const resp = await AJAX(`${API_URL}?key=${DEV_KEY}`, recipe);
   state.recipe = resp.data.recipe;
   addBookmark(state.recipe);
 };
