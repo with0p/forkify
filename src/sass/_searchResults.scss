@@ -12,6 +12,9 @@
 .pagination {
   margin-top: auto;
   padding: 0 3.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
   &::after {
     content: '';
@@ -19,13 +22,12 @@
     clear: both;
   }
 
-  &__btn {
-    &--prev {
-      float: left;
-    }
-    &--next {
-      float: right;
-    }
+  &-total__text {
+    padding: 0.5rem 0;
+    font-size: 1.3rem;
+    padding: 0.8rem 1.2rem;
+    color: $color-primary;
+    font-weight: 600;
   }
 }
 
@@ -39,4 +41,9 @@
   .twitter-link:visited {
     color: $color-grey-dark-2;
   }
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
 }
