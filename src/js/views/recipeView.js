@@ -5,6 +5,7 @@ class recipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _defaultErrorMessage = 'Could not find recipe, please, try another one';
   _defaultSuccessMessage = 'Success!';
+  _initialText = 'Start by searching for a recipe or an ingredient. Have fun!';
 
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));

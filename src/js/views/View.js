@@ -55,6 +55,23 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  renderInitial() {
+    const markup = this._initialText
+      ? `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${icons}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${this._initialText}</p>
+      </div>`
+      : '';
+
+    this._clear();
+    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
   update(data) {
     this._data = data;
     const newMarkup = this._generateMarkup();

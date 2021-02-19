@@ -6,6 +6,7 @@ class SearchResultsView extends View {
   _defaultErrorMessage =
     'No recipes found for your query, please, try another one';
   _defaultSuccessMessage = 'Success!';
+  _initialText = '';
   _generateMarkup() {
     return this._data.map(result => previewView.render(result, false)).join('');
   }
