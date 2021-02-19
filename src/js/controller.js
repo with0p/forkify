@@ -129,6 +129,7 @@ function controlInitialState() {
   window.history.pushState(null, '', '/');
   recipeView.renderInitial();
   searchResultsView.renderInitial();
+  searchView.focus();
 }
 
 (function init() {

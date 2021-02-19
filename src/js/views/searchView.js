@@ -12,6 +12,10 @@ class SearchView {
     });
   }
 
+  focus() {
+    this._parentEl.querySelector(`.search__field`).focus();
+  }
+
   _clearInput() {
     this._parentEl.querySelector(`.search__field`).value = '';
   }
