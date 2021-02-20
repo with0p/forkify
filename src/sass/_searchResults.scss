@@ -1,7 +1,37 @@
 .search-results {
-  padding: 3rem 0;
+  padding: 2rem 0;
   display: flex;
   flex-direction: column;
+}
+
+.sorting {
+  margin: 1rem 0;
+  padding: 0 3.5rem;
+  display: flex;
+  justify-content: space-between;
+
+  &-field {
+    display: flex;
+    flex-direction: row;
+    // padding: 0.8rem 1.2rem;
+    & span {
+      font-size: 1.5rem;
+      color: $color-primary;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding-right: 1rem;
+    }
+    &__buttons button {
+      border-radius: 50%;
+    }
+  }
+}
+
+.pressed svg {
+  fill: #fff;
+  background-color: #f38e82;
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px 1px #f38e82;
 }
 
 .results {
@@ -10,22 +40,15 @@
 }
 
 .pagination {
-  margin-top: auto;
+  margin: 2rem 0;
   padding: 0 3.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
-  }
-
   &-total__text {
-    padding: 0.5rem 0;
     font-size: 1.3rem;
-    padding: 0.8rem 1.2rem;
+    padding: 0.8rem 0;
     color: $color-primary;
     font-weight: 600;
   }
@@ -35,7 +58,7 @@
   color: $color-grey-dark-2;
   font-size: 1.2rem;
   padding: 0 3.5rem;
-  margin-top: 4rem;
+  margin-top: auto;
 
   .twitter-link:link,
   .twitter-link:visited {

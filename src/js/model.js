@@ -6,6 +6,7 @@ export const state = {
   search: {
     query: '',
     results: [],
+    unsortedResultsStored: [],
     page: 1,
     pageSize: RES_PER_PAGE,
   },
@@ -38,12 +39,43 @@ export const loadRecipeSearchResult = async function (query) {
     if (!query) return;
     const resultsJson = await AJAX(`${API_URL}?search=${query}&key=${DEV_KEY}`);
     state.search.results = [...resultsJson.data.recipes];
+    state.search.unsortedResultsStored = [...state.search.results];
     state.search.query = query;
     state.search.page = 1;
+    console.log(state.search.results);
   } catch (err) {
     throw err;
   }
 };
+/**
+ *
+ * @param {Array<Object>} results Array of objects
+ * @param {string} field Object field to sort by
+ * @param {string} direction Sort order, value in ['asc', 'desc']
+ */
+export const sortSearchResults = function (field, direction = 'asc') {
+  // state.search.unsortedResultsStored = [...state.search.results];
+  if (direction === 'asc') {
+    state.search.results.sort((a, b) => stringCompare(a[field], b[field]));
+  }
+  if (direction === 'desc') {
+    state.search.results.sort((a, b) => stringCompare(b[field], a[field]));
+  }
+};
+
+export const unsortSearchResults = function () {
+  state.search.results = [...state.search.unsortedResultsStored];
+  // state.search.unsortedResultsStored.splice(0);
+};
+function stringCompare(x, y) {
+  return elementCompare(x.toUpperCase(), y.toUpperCase());
+}
+
+function elementCompare(el1, el2) {
+  if (el1 === el2) return 0;
+  if (el1 > el2) return 1;
+  if (el1 < el2) return -1;
+}
 
 export const getSearchResultsPage = function (page = state.search.page) {
   state.search.page = page;

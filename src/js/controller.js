@@ -6,8 +6,8 @@ import searchResultsView from './views/searchResultsView.js';
 import paginationView from './views/paginationView.js';
 import bookmarksView from './views/bookmarksView.js';
 import addRecipeView from './views/addRecipeView.js';
-import HeaderView from './views/headerView.js';
 import headerView from './views/headerView.js';
+import sortingView from './views/sortingView.js';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -54,6 +54,9 @@ async function controlRecipeSearch() {
 
     // render first page of search result
     searchResultsView.render(model.getSearchResultsPage());
+
+    // render sorting
+    sortingView.render(model.state.search.query);
 
     // render initial pagination
     paginationView.render(model.state.search);
@@ -126,10 +129,27 @@ async function controlAddRecipe(newRecipe) {
 }
 
 function controlInitialState() {
+  // set url to initial
   window.history.pushState(null, '', '/');
+
+  // set recipe view to initial state
   recipeView.renderInitial();
+
+  // clear search results
   searchResultsView.renderInitial();
+
+  // set focus to the search input
   searchView.focus();
+}
+
+function constrolSorting(field, sort, isPressed) {
+  // check if sorted or unsorted results needed
+  isPressed
+    ? model.sortSearchResults(field, sort)
+    : model.unsortSearchResults();
+
+  // render sorted/unsorted results accordingly
+  searchResultsView.render(model.getSearchResultsPage());
 }
 
 (function init() {
@@ -138,6 +158,7 @@ function controlInitialState() {
   recipeView.addHandlerServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlRecipeSearch);
+  sortingView.addHandlerSortClick(constrolSorting);
   paginationView.addHandlerClick(controlPagination);
   addRecipeView.addHandlerUpload(controlAddRecipe);
   headerView.addHandlerInit(controlInitialState);

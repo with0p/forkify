@@ -130,6 +130,7 @@
     height: 100%;
     width: 100%;
     fill: $color-primary;
+    border-radius: 50%;
     transition: all 0.3s;
   }
 
@@ -138,12 +139,10 @@
   }
 
   &:hover svg {
-    fill: $color-grad-2;
     transform: translateY(-1px);
   }
 
   &:active svg {
-    fill: $color-grad-2;
     transform: translateY(0);
   }
 
