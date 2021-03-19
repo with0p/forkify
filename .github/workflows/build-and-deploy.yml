@@ -1,4 +1,4 @@
-name: Node.js CI
+name: CI
 on: workflow_dispatch
 
 jobs:
@@ -15,4 +15,9 @@ jobs:
 
       - run: npm install
       - run: npm run build
-      - run: npm run deploy -- -r "https://${{ secrets.GITHUB_TOKEN }}@github.com/with0p/forkify.git" -u "with0p <with2p@yandex.ru>"
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
