@@ -6,7 +6,7 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html --out-dir build --public-url ./",
-    "deploy": "gh-pages -d build -u \"with0p <with2p@yandex.ru>\""
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
