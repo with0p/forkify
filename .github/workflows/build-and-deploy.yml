@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '10.x'
-      - run: git config user.name "user-action"
+      - run: git config user.name "with0p"
       - run: git config user.email "with2p@yandex.ru"
       - run: npm install
       - run: npm run build
